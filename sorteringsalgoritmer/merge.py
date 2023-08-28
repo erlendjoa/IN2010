@@ -38,4 +38,4 @@ def merge(arrA, arrB, arr):
 arr = [2, 3, 6, 5, 4, 8, 9, 9, 2, 14, 1]
 print(mergeSort(arr))
 
-# Merge: O(n), MergeSort: log(n)    ->  O(n*log(n))
+# merge: O(n), mergeSort: log(n)    ->  O(n*log(n))
