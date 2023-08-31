@@ -1,26 +1,53 @@
-arr = []
+
+
+arr = []  
 
 def pushFront(n):
-    current = arr[i]
-    arr[i] = n
-    for i in range(0, len(arr)-1):
+    if len(arr) == 0:
+        arr.append(n)
+        return
+    
+    current = arr[0]
+    arr[0] = n
+    for i in range(len(arr)):
+        if (i+1 == len(arr)):
+            arr.append(current)
+            return
         next = arr[i+1]
-        
+        arr[i+1] = current
+        current = next
 
-        
+def pushMiddle(n):
+    if (len(arr) == 0) or (len(arr) == 1):
+        arr.append(n)
+        return
+    
+    mid = (len(arr)+1//2)-1
+    current = arr[mid]
+    arr[mid] = n
+
+    for i in range(mid, len(arr)):
+        if (i+1 == len(arr)):
+            arr.append(current)
+            return
+        next = arr[i+1]
+        arr[i+1] = current
+        current = next
 
 def teque(s):
-    n = int(s[len(s)-1])
+    l = s.split(" ")
+    n = int(l[1])
 
-    if s[:-1] == "push_back":
+    if l[0] == "push_back":
         arr.append(n)
-    elif s[:-1] == "push_front":
-        pushFront(n)
+    elif l[0] == "push_front":
+        arr.insert(0, n)
+        #pushFront(n)
+    elif l[0] == "push_middle":
+        arr.insert((len(arr)+1)//2, n)
+        #pushMiddle(n)
     else:
-        pushMiddle(n)
+        print(arr[n])
 
-        
-
-inpInt = input()
-inp1 = input()
-teque(inp1)
+for i in range(int(input())):
+    teque(input())
