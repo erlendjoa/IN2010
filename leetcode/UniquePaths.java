@@ -5,7 +5,7 @@ public class UniquePaths  {
     public int uniquePaths(int m, int n) {
         this.m = m;
         this.n = n;
-        return search(0, 0);
+        return search(1, 1);
     }
 
     public int search(int x, int y) {
@@ -25,7 +25,7 @@ public class UniquePaths  {
 
     public static void main(String[] args) {
         UniquePaths solution = new UniquePaths();
-        int result = solution.uniquePaths(3, 7);
+        int result = solution.uniquePaths(7, 14);
         System.out.println("Number of unique paths: " + result);
     }
 }
