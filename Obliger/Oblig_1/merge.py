@@ -1,7 +1,5 @@
 import sys, time
 
-t = time.time_ns()  # start timer
-
 def mergeSort(arr):
     if len(arr) <= 1:   # return smallest length array of len() 1
         return arr
@@ -46,10 +44,7 @@ with open(sys.argv[1]) as f:
     for n in f:
         arr.append(int(n.strip()))
         mergeSort(arr)
-
-# finish up timer
-timeus = (time.time_ns() - t) / 1000
-
+        
 # write to new file:
 nf = open(sys.argv[1].split(".")[0] + "_merge.out.csv", "w")
 for n in [str(n) for n in arr]:

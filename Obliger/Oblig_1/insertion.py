@@ -1,7 +1,5 @@
 import sys, time
 
-t = time.time_ns()  # start timer
-
 def insertion(arr):
     for i in range(len(arr)):   # iterate over array linear
         key = arr[i]               # key always is current value of index
@@ -24,9 +22,6 @@ with open(sys.argv[1]) as f:
     for n in f:
         arr.append(int(n.strip()))
         insertion(arr)
-
-# finish up timer
-timeus = (time.time_ns() - t) / 1000
 
 # write to new file:
 nf = open(sys.argv[1].split(".")[0] + "_insertion.out.csv", "w")
