@@ -117,11 +117,11 @@ with open(sys.argv[1]) as f:
         insertionArr.append(int(n.strip()))
         mergeArr.append(int(n.strip()))
 
-        t = time.time_ns() # start timer
+        t = time.time()*1000.0 # start timer
         insertion(insertionArr)
         insertionOutArr[2] = (time.time_ns() - t) / 1000 # finish up timer
 
-        t = time.time_ns() # start timer
+        t = time.time()*1000.0 # start timer
         mergeSort(mergeArr)
         mergeOutArr[2] = (time.time_ns() - t) / 1000 # finish up timer
 
