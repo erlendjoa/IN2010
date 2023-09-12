@@ -22,21 +22,21 @@ def merge(arrA, arrB, arr):
     while i < len(arrA) and j < len(arrB):
         if arrA[i] <= arrB[j]:
             #arr[i+j] = arrA[i]
-            arr.swap(i+j, i)
+            arr.swap_merge(i+j, i, arrA)
             i += 1
         else:
             #arr[i+j] = arrB[j]
-            arr.swap(i+j, i)
+            arr.swap_merge(i+j, j, arrB)
             j += 1
 
     # insert rest of the array while either i or j == len(arrA/B)
     while i < len(arrA):
         #arr[i+j] = arrA[i]
-        arr.swap(i+j, i)
+        arr.swap_merge(i+j, i, arrA)
         i += 1
     while j < len(arrB):
         #arr[i+j] = arrB[j]
-        arr.swap(i+j, i)
+        arr.swap_merge(i+j, j, arrB)
         j += 1
     
     arr.increment_swap(arrA, arrB)  # add the swaps from previous iterations of merge
@@ -45,9 +45,8 @@ def merge(arrA, arrB, arr):
 
 # merge: O(n), mergeSort: log(n)    ->  O(n*log(n))
 
-
-array = []
-arr = CountSwaps(array)
+'''
+arr = CountSwaps([])
 # sort from argument input:
 with open(sys.argv[1]) as f:
     for n in f:
@@ -55,6 +54,7 @@ with open(sys.argv[1]) as f:
         sort(arr)
         
 # write to new file:
-nf = open(sys.argv[1].split(".")[0] + "_merge.out.csv", "w")
+nf = open(sys.argv[1].split(".")[0] + "_merge.out", "w")
 for n in [str(n) for n in arr]:
     nf.write(n + "\n")
+'''
