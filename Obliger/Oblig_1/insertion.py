@@ -1,4 +1,5 @@
-import sys, countswaps, countcompares
+import sys, countcompares
+from countswaps import CountSwaps
 
 def sort(arr):
     for i in range(len(arr)):   # iterate over array linear
@@ -13,20 +14,20 @@ def sort(arr):
 
         # the current empty space which is j+1 is set to key. key might already be there if no changes in while-loop
         arr[j+1] = key
-    return arr
 
 # ((n-1)*n)/2   ->  (n)*n   ->  O(n^2)
 
-'''
+
 # sort from argument input:
-arr = []
+array = []
+arr = CountSwaps(array)
+
 with open(sys.argv[1]) as f:
     for n in f:
         arr.append(int(n.strip()))
         sort(arr)
 
 # write to new file:
-nf = open(sys.argv[1].split(".")[0] + "_insertion.out.csv", "w")
+nf = open(sys.argv[1].split(".")[0] + "_insertion.out", "w")
 for n in [str(n) for n in arr]:
     nf.write(n + "\n")
-'''

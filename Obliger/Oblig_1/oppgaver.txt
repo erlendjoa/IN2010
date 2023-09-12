@@ -1,0 +1,43 @@
+a)
+
+Algorithm push_back(N):
+	A|A| <-- N
+	
+Algorithm push_front(N):
+	i <-- 0
+	while i != |A| do:
+		A|i| <-- N
+		N <-- A|i+1|
+		i++
+	A|A| <-- N
+	
+Algorithm push_middle(N):
+	i <--  A//2
+	while i != |A| do:
+		A|i| <-- N
+		N <-- A|i+1|
+		i++
+	A|A| <-- N
+
+Algorithm get(N):
+    print(A|N|)
+
+
+c)
+
+Verste-tilfelle kjøretidsanalyse:
+
+	N = 100000000
+	for i in range(N, -1, -1):
+		push_front(N)
+		push_back(N)
+		push_middle(N)
+		get(i)
+	
+	: resulterer i O(n)
+
+d)
+
+Med en tid på O(n) vil tiden det tar øke lineært med størrelsen på input.
+For hver innsetting med push_back(N) vil programmet måtte gå gjennom hvert element.
+Om det er få elementer vil det ta mye mindre tid enn et ubegrenset antall. 
