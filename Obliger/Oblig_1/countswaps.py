@@ -6,6 +6,7 @@ class CountSwaps(list):
         self[i], self[j] = self[j], self[i]
 
     def swap_merge(self, i, j, other):
+        self.swaps += 1
         self[i], other[j] = other[j], self[i]
 
     def increment_swap(self, arrA, arrB):

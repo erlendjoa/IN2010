@@ -12,6 +12,8 @@ def sort(arr):
 
         # the current empty space which is j+1 is set to key. key might already be there if no changes in while-loop
         arr[j+1] = key
+    
+    return arr
 
 # ((n-1)*n)/2   ->  (n)*n   ->  O(n^2)
 

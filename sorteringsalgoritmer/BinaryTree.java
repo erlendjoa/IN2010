@@ -45,7 +45,14 @@ public class BinaryTree {
     private boolean searchRecursive(Node node, int data) {
         if (root == null) {
             return false;
+        } else if (root.n == data) {
+            return true;
+        } else if (data < root.n) {
+            searchRecursive(root.left, data);
+        } else {
+            searchRecursive(root.right, data);
         }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -57,5 +64,7 @@ public class BinaryTree {
         tree.insert(6);
         tree.insert(4);
         tree.display();
+        System.out.println(tree.search(7));
+        System.out.println(tree.search(8));
     }
 }
