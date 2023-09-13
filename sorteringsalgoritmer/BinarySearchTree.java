@@ -1,6 +1,6 @@
 
 
-public class BinaryTree {
+public class BinarySearchTree {
     Node root;
     
     private class Node {
@@ -101,7 +101,7 @@ public class BinaryTree {
     }
 
     public static void main(String[] args) {
-        BinaryTree tree = new BinaryTree();
+        BinarySearchTree tree = new BinarySearchTree();
         tree.insert(5);
         tree.insert(1);
         tree.insert(3);
@@ -114,6 +114,5 @@ public class BinaryTree {
         System.out.println(tree.search(1));
         System.out.println(tree.search(7));
         System.out.println(tree.search(8));
-
     }
 }
