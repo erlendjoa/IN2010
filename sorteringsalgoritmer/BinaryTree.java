@@ -16,16 +16,15 @@ public class BinaryTree {
     public void insert(int data) {
         root = insertRecursive(root, new Node(data));
     }
-    private Node insertRecursive(Node root, Node node) {
-        if (root == null) {
-            root = node;
-            return node;
-        } else if (node.n < root.n) {
-            root.left = insertRecursive(root.left, node);
+    private Node insertRecursive(Node cr, Node node) {
+        if (cr == null) {
+            cr = node;
+        } else if (node.n < cr.n) {
+            cr.left = insertRecursive(cr.left, node);
         } else {
-            root.right = insertRecursive(root.right, node);
+            cr.right = insertRecursive(cr.right, node);
         }
-        return root;
+        return cr;
     }
 
     public void display() {
@@ -43,16 +42,62 @@ public class BinaryTree {
         return searchRecursive(root, data);
     }
     private boolean searchRecursive(Node node, int data) {
-        if (root == null) {
+        if (node == null) {
             return false;
-        } else if (root.n == data) {
+        } else if (node.n == data) {
             return true;
-        } else if (data < root.n) {
-            searchRecursive(root.left, data);
-        } else {
-            searchRecursive(root.right, data);
+        } else if (node.n > data) {
+            return searchRecursive(node.left, data);
+        } 
+        return searchRecursive(node.right, data);
+    }
+
+    public void remove(int data) {
+        if (search(data)) {
+            root = removeRecursive(root, data, root);
         }
-        return false;
+    }
+
+    public Node removeRecursive(Node node, int data, Node parent) {
+        if (node == null) {
+            return node;
+        } else if (data < node.n) {
+            node.left = removeRecursive(node.left, data, node);
+        } else if (data > node.n) {
+            node.right = removeRecursive(node.right, data, node);
+        } else {
+            // if node has no children:
+            if (node.left == null && node.right == null) {
+                node = null;
+            // if node has right or both child:
+            } else if (node.right != null) {
+                node.n = successor(node);
+                node.left = removeRecursive(node.left, node.n, node);
+            // if node has only left child
+            } else {
+                node.n = predecessor(node);
+                node.left = removeRecursive(node.left, node.n, node);
+            }
+        }
+        return node;
+    }   
+
+    public int successor(Node node) {
+        node = node.right;
+        // go as far left to find the most similar/smallest int
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node.n;
+    }
+
+    public int predecessor(Node node) {
+        node = node.left;
+        // go as far right to find the most similar/biggest int
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node.n;
     }
 
     public static void main(String[] args) {
@@ -63,8 +108,12 @@ public class BinaryTree {
         tree.insert(7);
         tree.insert(6);
         tree.insert(4);
+        tree.remove(1);
+        tree.remove(6);
         tree.display();
+        System.out.println(tree.search(1));
         System.out.println(tree.search(7));
         System.out.println(tree.search(8));
+
     }
 }
