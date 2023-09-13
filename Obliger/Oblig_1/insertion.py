@@ -17,7 +17,7 @@ def sort(arr):
 
 # ((n-1)*n)/2   ->  (n)*n   ->  O(n^2)
 
-'''
+
 # sort from argument input:
 arr = CountSwaps([])
 with open(sys.argv[1]) as f:
@@ -29,4 +29,3 @@ with open(sys.argv[1]) as f:
 nf = open(sys.argv[1].split(".")[0] + "_insertion.out", "w")
 for n in [str(n) for n in arr]:
     nf.write(n + "\n")
-'''

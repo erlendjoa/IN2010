@@ -1,38 +1,4 @@
-
-
-arr = []  
-
-def pushFront(n):
-    if len(arr) == 0:
-        arr.append(n)
-        return
-    
-    current = arr[0]
-    arr[0] = n
-    for i in range(len(arr)):
-        if (i+1 == len(arr)):
-            arr.append(current)
-            return
-        next = arr[i+1]
-        arr[i+1] = current
-        current = next
-
-def pushMiddle(n):
-    if (len(arr) == 0) or (len(arr) == 1):
-        arr.append(n)
-        return
-    
-    mid = (len(arr)+1//2)-1
-    current = arr[mid]
-    arr[mid] = n
-
-    for i in range(mid, len(arr)):
-        if (i+1 == len(arr)):
-            arr.append(current)
-            return
-        next = arr[i+1]
-        arr[i+1] = current
-        current = next
+arr = []
 
 def teque(s):
     l = s.split(" ")

@@ -45,7 +45,7 @@ def merge(arrA, arrB, arr):
 
 # merge: O(n), mergeSort: log(n)    ->  O(n*log(n))
 
-'''
+
 arr = CountSwaps([])
 # sort from argument input:
 with open(sys.argv[1]) as f:
@@ -57,4 +57,3 @@ with open(sys.argv[1]) as f:
 nf = open(sys.argv[1].split(".")[0] + "_merge.out", "w")
 for n in [str(n) for n in arr]:
     nf.write(n + "\n")
-'''

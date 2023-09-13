@@ -1,3 +1,10 @@
+HVORDAN KJØRE PROGRAMMENE:
+
+feks:
+	py algname.py inputfil.txt
+	py main.py inputfil.txt
+
+
 a)
 
 Algorithm push_back(N):
@@ -41,3 +48,26 @@ d)
 Med en tid på O(n) vil tiden det tar øke lineært med størrelsen på input.
 For hver innsetting med push_back(N) vil programmet måtte gå gjennom hvert element.
 Om det er få elementer vil det ta mye mindre tid enn et ubegrenset antall. 
+
+
+Eksperimenter:
+
+• I hvilken grad stemmer kjøretiden overens med kjøretidsanalysene (store
+O) for de ulike algoritmene?
+
+	Grafene i excel viser at kjøretiden stemmer med store O notasjon.
+	Ved nearly sorted er insertion raskere, mens random er merge mye raskere med O(nlog(n))
+	
+Hvordan er antall sammenligninger og antall bytter korrelert med kjøretiden?
+
+	kjøretiden er et resultat av antall bytter og cmp.
+
+Hvilke sorteringsalgoritmer utmerker seg positivt når n er veldig liten?
+Og når n er veldig stor?
+
+	insertion når n er liten, merge når n er stor.
+	Dette pga antall bytter som må til for en O(n^2) algoritme vs. O(nlog(n)).
+
+Hvilke sorteringsalgoritmer utmerker seg positivt for de ulike inputfilene?
+
+	insertion egner seg i de små filene, mens merge egner seg i større (om de er random sorted)
