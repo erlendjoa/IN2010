@@ -50,24 +50,19 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
         int balance = getBalance(node);
         if (balance > 1) {
             if (e.compareTo(node.left.data) < 0) {
-                System.out.println("RR");
                 return rightRotate(node);
   
             } else {
-                System.out.println("LR");
                 node.left = leftRotate(node.left);
                 return rightRotate(node);
             }
 
         } else if (balance < -1) {
-            System.out.println(balance);
             
             if (e.compareTo(node.right.data) > 0) {
-                System.out.println("LL");
                 return leftRotate(node);
 
             } else {
-                System.out.println("RL");
                 node.right = rightRotate(node.right);
                 return leftRotate(node);
             }
