@@ -1,3 +1,6 @@
+import java.io.PrintStream;
+import java.util.Random;
+
 public class AVLBinarySearchTree <E extends Comparable<E> > {
     private Node root;
     
@@ -8,27 +11,57 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
 
         public Node(E d) {
             data = d;
-            height = 1;
+            height = 0;
         }
     }
+
     private int getHeight(Node node) {
-        if (node == null) return 0;
+        if (node == null) return -1;
         return node.height;
     }
-    private int getBalance(Node node) {
-        if (node == null) return 0;
-        return (getHeight(node.left) - getHeight(node.right));
+
+    private int balanceFactor(Node node) {
+    return (getHeight(node.left) - getHeight(node.right));
+
     }
+
+    private Node balance(Node node) {
+        // get node balance
+        int balance = balanceFactor(node);
+
+        if (balance > 1) {
+            if (balanceFactor(node.left) < 0) {
+                node.left = leftRotate(node.left);
+            }
+            return rightRotate(node);
+
+        } else if (balance < -1) {
+            if (balanceFactor(node.right) > 0) {
+                node.right = rightRotate(node.right);
+            }
+            return leftRotate(node);
+        } 
+        return node;
+    }
+
     private Node rightRotate(Node node) {
         Node temp = node.left;
         node.left = temp.right;    
         temp.right = node;
+
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        temp.height = 1 + Math.max(getHeight(temp.left), getHeight(temp.right));
+
         return temp;
     }
     private Node leftRotate(Node node) {
         Node temp = node.right;
         node.right = temp.left;
         temp.left = node;
+
+        node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
+        temp.height = 1 + Math.max(getHeight(temp.left), getHeight(temp.right));
+
         return temp;
     }
 
@@ -39,53 +72,31 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
     private Node insertRec(Node node, E e) {
         if (node == null) {
             System.out.println(e + " was inserted as the node was null");
-            return new Node(e);
+            node = new Node(e);
         } else if (e.compareTo(node.data) < 0) {
             node.left = insertRec(node.left, e);
         } else if (e.compareTo(node.data) > 0) {
             node.right = insertRec(node.right, e);
         }
+        // set node height
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
 
-        int balance = getBalance(node);
-        if (balance > 1) {
-            if (e.compareTo(node.left.data) < 0) {
-                return rightRotate(node);
-  
-            } else {
-                node.left = leftRotate(node.left);
-                return rightRotate(node);
-            }
-
-        } else if (balance < -1) {
-            
-            if (e.compareTo(node.right.data) > 0) {
-                return leftRotate(node);
-
-            } else {
-                node.right = rightRotate(node.right);
-                return leftRotate(node);
-            }
-            
-        } 
-        return node;
+        return balance(node);
     }
 
     public static void main(String[] args) {
         AVLBinarySearchTree<Integer> tree = new AVLBinarySearchTree<>();
+        tree.insert(50);
+        tree.insert(100);
+        tree.insert(75);
+        tree.insert(150);
         tree.insert(10);
-        System.out.println("ROOT: " + tree.root.data);
         tree.insert(20);
-        System.out.println("ROOT: " + tree.root.data);
         tree.insert(15);
-        System.out.println("ROOT: " + tree.root.data);
-        tree.insert(3);
-        System.out.println("ROOT: " + tree.root.data);
         tree.insert(5);
-        System.out.println("ROOT: " + tree.root.data);
         tree.insert(1);
-        System.out.println("ROOT: " + tree.root.data);
-        tree.insert(30);
-        System.out.println("ROOT: " + tree.root.data);
+        tree.insert(2);
+        tree.insert(3);
+        System.out.println(tree.root.data);
     }
 }
