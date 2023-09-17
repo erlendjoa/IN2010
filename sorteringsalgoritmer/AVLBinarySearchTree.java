@@ -1,6 +1,3 @@
-import java.io.PrintStream;
-import java.util.Random;
-
 public class AVLBinarySearchTree <E extends Comparable<E> > {
     private Node root;
     
