@@ -1,0 +1,17 @@
+Dybde-først søk:
+
+G = (V, E)
+
+Procedure DFSFull(G)
+    visited <- {}
+    for v in V do:
+        if v not in visited then:
+            DFSVisit(G, v, visited)
+
+Procedure DFSVisit(G, u, visited)
+    add u to visited
+        for (u,v) in E do:
+            if v not in visited then:
+                DFSVisit(G, v, visited)
+
+= O(|V|+|E|)

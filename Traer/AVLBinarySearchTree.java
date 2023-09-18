@@ -8,11 +8,11 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
 
         public Node(E d) {
             data = d;
-            height = 1;
+            height = 0;
         }
     }
     private int getHeight(Node node) {
-        if (node == null) return 0;
+        if (node == null) return -1;
         return node.height;
     }
     private int getBalance(Node node) {
@@ -73,6 +73,13 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
 
     public static void main(String[] args) {
         AVLBinarySearchTree<Integer> tree = new AVLBinarySearchTree<>();
+
+        tree.insert(4);
+        tree.insert(3);
+        tree.insert(2);
+        tree.insert(1);
+        System.out.println(tree.root.data);
+        /* 
         tree.insert(10);
         System.out.println("ROOT: " + tree.root.data);
         tree.insert(20);
@@ -87,5 +94,6 @@ public class AVLBinarySearchTree <E extends Comparable<E> > {
         System.out.println("ROOT: " + tree.root.data);
         tree.insert(30);
         System.out.println("ROOT: " + tree.root.data);
+        */
     }
 }

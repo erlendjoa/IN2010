@@ -1,0 +1,34 @@
+V = {A, B, C, D, E, F, G}
+E = {{A, B}, {A, C}, {A, D},
+    {B, C}, {C, D}, {C, F},
+    {D, E}, {E, F}, {F, G}}
+G = (V, E)
+
+O(G) = O(|V|+|E|)
+
+urettet = {u, v}
+rettet = (u, v)
+
+deg(v) -> eks: (deg(A) == 3)
+inngrad / utgrad
+
+Nabomatrise:
+  A B C D E F G
+A 0 1 1 1 0 0 0
+B 1 0 1 0 0 0 0
+C 1 1 0 1 0 0 0
+D 1 0 1 0 1 0 0
+E 0 0 0 1 0 1 0
+F 0 0 0 0 1 0 1
+G 0 0 0 0 0 1 0
+= O(|V|)
+
+Naboliste:
+A : [B, C, D]
+B : [A, C]
+C : [A, B, D, F]
+D : [A, C, E]
+E : [D, F]
+F : [C, E, G]
+G : [F]
+= O(deg(v))
