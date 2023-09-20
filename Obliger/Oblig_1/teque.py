@@ -8,10 +8,8 @@ def teque(s):
         arr.append(n)
     elif l[0] == "push_front":
         arr.insert(0, n)
-        #pushFront(n)
     elif l[0] == "push_middle":
         arr.insert((len(arr)+1)//2, n)
-        #pushMiddle(n)
     else:
         print(arr[n])
 

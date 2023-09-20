@@ -1,9 +1,11 @@
-HVORDAN KJØRE PROGRAMMENE:
+HVORDAN KJØRE SORTERINGSPROGRAMMENE:
 
 feks:
 	py algname.py inputfil.txt
 	py main.py inputfil.txt
 
+
+Oppgaver
 
 a)
 
@@ -33,41 +35,37 @@ Algorithm get(N):
 c)
 
 Verste-tilfelle kjøretidsanalyse:
-
-	N = 100000000
-	for i in range(N, -1, -1):
-		push_front(N)
-		push_back(N)
-		push_middle(N)
-		get(i)
-	
-	: resulterer i O(n)
+Med en tid på O(n) vil tiden det tar øke lineært med N, det vil si antall kommandoer som er push_front eller
+push_middle vil øke. For hver innsetting med push_front(N) vil programmet måtte gå gjennom hvert element for
+å øke indeksen. Verste kjøretid vil derfor være når N er maks (10^6).
 
 d)
 
-Med en tid på O(n) vil tiden det tar øke lineært med størrelsen på input.
-For hver innsetting med push_back(N) vil programmet måtte gå gjennom hvert element.
-Om det er få elementer vil det ta mye mindre tid enn et ubegrenset antall. 
+Om det er få elementer vil det ta mye mindre tid enn et ubegrenset antall nettopp på grunn av
+samme logikk jeg forklarer i oppgave C. Programmet må oppdatere indeks til flere 
 
 
 Eksperimenter:
 
-• I hvilken grad stemmer kjøretiden overens med kjøretidsanalysene (store
-O) for de ulike algoritmene?
+• I hvilken grad stemmer kjøretiden overens med kjøretidsanalysene (store O)
+for de ulike algoritmene?
 
 	Grafene i excel viser at kjøretiden stemmer med store O notasjon.
 	Ved nearly sorted er insertion raskere, mens random er merge mye raskere med O(nlog(n))
 	
-Hvordan er antall sammenligninger og antall bytter korrelert med kjøretiden?
+• Hvordan er antall sammenligninger og antall bytter korrelert med kjøretiden?
 
 	kjøretiden er et resultat av antall bytter og cmp.
 
-Hvilke sorteringsalgoritmer utmerker seg positivt når n er veldig liten?
+• Hvilke sorteringsalgoritmer utmerker seg positivt når n er veldig liten?
 Og når n er veldig stor?
 
 	insertion når n er liten, merge når n er stor.
 	Dette pga antall bytter som må til for en O(n^2) algoritme vs. O(nlog(n)).
 
-Hvilke sorteringsalgoritmer utmerker seg positivt for de ulike inputfilene?
+• Hvilke sorteringsalgoritmer utmerker seg positivt for de ulike inputfilene?
 
-	insertion egner seg i de små filene, mens merge egner seg i større (om de er random sorted)
+	insertion egner seg i de små filene, mens merge egner seg i større (om de er random sorted).
+	Om de større filene er nearly sorted vil insertion likevel lønne seg. Dette fordi det gjøres
+	færre bytter, og dermed trenger ikke insertion å oppdatere indeks for like mange heltall 
+	som merge.
