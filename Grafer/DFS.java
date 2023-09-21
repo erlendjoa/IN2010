@@ -28,7 +28,6 @@ public class DFS<E> {
     public boolean DFSVisit(E u, E elem) {
         if (u.equals(elem)) {
             isFound = true;
-            break;
         }
         visited.add(u);
         for (Set<E> set : E) {
