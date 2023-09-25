@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class DFS<E> {
     Set<E> V;
     Set<Set<E>> E;
+    Set<E> visited;
+    isFound = false;
 
     public DFS(Set<E> allu, Set<Set<E>> allv) {
         V = allu;
@@ -12,31 +14,29 @@ public class DFS<E> {
     }
 
     public boolean DFSFull(E elem) {
-        Set<E> visited = new HashSet<>();
-        boolean bool = false;
+        isFound = false;
+        visited = new HashSet<>();
+
         for (E v : V) {
-            System.out.println(v);
-            System.out.println(visited);
             if (!visited.contains(v)) {
-                bool = DFSVisit(v, visited, elem);
+                DFSVisit(v, elem);
             }
         }
-        return bool;
+        return isFound;
     }
 
-    public boolean DFSVisit(E u, Set<E> visited, E elem) {
+    public boolean DFSVisit(E u, E elem) {
         if (u.equals(elem)) {
-            return true;
+            isFound = true;
         }
         visited.add(u);
         for (Set<E> set : E) {
             ArrayList<E> arrSet = new ArrayList<>(set);
             E v = arrSet.get(1);
             if (!visited.contains(v)) {
-                DFSVisit(v, visited, elem);
+                DFSVisit(v, elem);
             }
         }
-        return false;
     }
 
 
