@@ -6,7 +6,7 @@ public class DFS<E> {
     Set<E> V;
     Set<Set<E>> E;
     Set<E> visited;
-    isFound = false;
+    boolean isFound = false;
 
     public DFS(Set<E> allu, Set<Set<E>> allv) {
         V = allu;
@@ -37,6 +37,7 @@ public class DFS<E> {
                 DFSVisit(v, elem);
             }
         }
+        return isFound;
     }
 
 
