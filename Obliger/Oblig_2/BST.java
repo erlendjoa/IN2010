@@ -70,9 +70,6 @@ class BST {
         }
 
         if (node.data == data) {
-            if (node.left == null && node.right == null) {
-                return null;
-            }
             if (node.left == null) {
                 return node.right;
             }
