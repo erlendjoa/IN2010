@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.function.Function;
 
 class Set {
 
@@ -73,12 +71,12 @@ class Set {
 
     public void insert(int newData) {
         root = insertRec(root, new Node(newData));
-        size++;
     }
 
     private Node insertRec(Node node, Node newNode) {
         if (node == null) {
             node = newNode;
+            size++;
         } else if (newNode.data < node.data) {
             node.left = insertRec(node.left, newNode);
         } else if (newNode.data > node.data) {
@@ -126,14 +124,15 @@ class Set {
             if (node.right == null) {
                 return node.left;
             }
-
             // Find min to the right
             Node leftmost = node.right;
             while (leftmost.left != null) {
                 leftmost = leftmost.left;
             }
             node.data = leftmost.data;
+            size++;
             node.right = removeRec(node.right, leftmost.data);
+            
         }
         return node;
     }
