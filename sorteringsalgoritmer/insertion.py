@@ -12,7 +12,7 @@ def insertion(arr):
     return arr
 
 #ex:
-arr = [2, 3, 6, 5, 4]
+arr = [0,1,7,2,4,11,10,5,12,6,9,29,14,28,21]
 print(insertion(arr))
 
 # ((n-1)*n)/2   ->  (n)*n   ->  O(n^2)
