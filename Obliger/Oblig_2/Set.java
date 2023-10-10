@@ -143,29 +143,26 @@ class Set {
 
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: java CommandFileReader <file_path>");
             return;
         }
 
-        String filePath = args[0]; // Get the file path from command-line arguments
+        String filePath = args[0];
 
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String s = bufferedReader.readLine();
-            int arraySize = Integer.parseInt(s); // Parse the first line as the array size
+            int arraySize = Integer.parseInt(s);
             String[] cmdArr = new String[arraySize];
 
-            int i = 0; // Initialize the array index to 0
+            int i = 0;
 
-            // Read lines from the file and store them in the array
             while ((s = bufferedReader.readLine()) != null && i < arraySize) {
                 cmdArr[i] = s;
                 i++;
             }
 
-            // Close the BufferedReader and FileReader
             bufferedReader.close();
             fileReader.close();
 
@@ -185,9 +182,7 @@ class Set {
             }
 
         } catch (IOException e) {
-            System.out.println("File not found or error reading the file.");
         } catch (NumberFormatException e) {
-            System.out.println("Invalid array size in the file.");
         }
     }
 
