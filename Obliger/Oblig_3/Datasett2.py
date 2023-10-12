@@ -5,7 +5,7 @@ class Movie:
         self.ttId = ttId
         self.tittel = tittel
         self.rating = rating
-        self.actors = set()
+        self.nmIds = set()
 
 class Actor:
     def __init__(self, nmId, navn):
@@ -16,11 +16,10 @@ class Actor:
         self.ttIds = ttId
 
 
-allActors = {} # {}
-allMovies = {} # {"ttId":Movie(), "ttId":Movie(), ...}
 
+M = {} # {"ttId":Movie(), "ttId":Movie(), ...}
 V = {}
-E = {}
+E = set()
 
 with open(sys.argv[2], encoding='utf-8') as f:
     for line in f:
@@ -28,7 +27,7 @@ with open(sys.argv[2], encoding='utf-8') as f:
 
         content = line.strip().split("\t")
         try:
-            allMovies[content[0]] = Movie(content[0], content[1], content[2])
+            M[content[0]] = Movie(content[0], content[1], content[2])
         except IndexError:
             print("NO")
 
@@ -41,28 +40,24 @@ with open(sys.argv[1], encoding='utf-8') as f:
         newActor = Actor(content.pop(0), content.pop(0)) #nmId, navn
         movielist = []
         for c in content:
-
-            if c in allMovies:
-                # add movie to Actor() movielist
-                movielist.append(allMovies[c])
-                
-                for actor in allMovies[c].actors:
-                    E.add((newActor, actor, allMovies[c].rating))
-                allMovies[c].actors.add(newActor)
+            if c in M:
+                movielist.append(M[c].ttId)
+                M[c].nmIds.add(newActor.nmId)
 
         newActor.setttIds(movielist)
 
         # CREATE VERTICE: Actor()
         V[newActor.nmId] = newActor
-"""
-for a in V:
-    currentActor = V[a]
-    for movie in currentActor.ttIds:
-        for actor in allMovies[movie.ttId].actors:
-            if currentActor.nmId != actor.nmId:
-                print("OPPRETTET: " + currentActor.navn + " ," + actor.navn + " = " + movie.tittel)
-                E.add((currentActor, actor, allMovies[movie.ttId].rating)) 
-"""
+
+for ttId in M:
+    print(M[ttId].tittel, len(M[ttId].nmIds))
+    for nmId1 in M[ttId].nmIds:
+            for nmId2 in M[ttId].nmIds:
+                #print(V[nmId1].navn, V[nmId2].navn, M[ttId].tittel)
+                if nmId1 != nmId2:
+                    E.add((V[nmId1], V[nmId2], M[ttId].rating))
+
+
 print(len(V))
 print(len(E))
 
@@ -77,4 +72,3 @@ def DijkstraShortestPath(s):
 
     while len(queue) > 0:
         s = heapq.heappop(queue)
-        
