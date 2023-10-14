@@ -59,9 +59,7 @@ print(len(E))
 
 for t in E:
     G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
-
-print(V['nm0000168'].navn, V['nm0000949'].navn)
-
+    G[t[1]][t[0]] = M[t[2]]
 
 def DijkstraShortestPath(startId, endId):
     queue = []
@@ -69,30 +67,33 @@ def DijkstraShortestPath(startId, endId):
     path = []
 
     for v in V:
-        dist[v] = float('inf')
-        heapq.heappush(queue, (dist[v], v))
+        dist[v] = float(999999999)
     dist[startId] = 0
-    heapq.heappush(queue, (dist[startId], startId))
+    heapq.heappush(queue, (0, startId))
 
-    while len(queue) > 0:
-        u = heapq.heappop(queue)
-        # u[0] <- weight
-        # u[1] <- nmId
+    while queue:
+        w, u = heapq.heappop(queue)
+        print(w, u)
         if u in path:
-            continue
-        
-        path.append(u[1])
+            return path
+        path.append(u)
 
-        if u[1] == endId:
+        if u == endId:
+            print("OH")
             return path
 
-        for nmKey in G[u[1]]:
-            print(V[u[1]].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u[1]][nmKey].tittel)
+        print(len(G[u]))
+        for nmKey in G[u]:
+            print(V[u].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u][nmKey].tittel)
 
-            c = ( dist[nmKey] + float(G[u[1]][nmKey].rating)) 
+            c = dist[nmKey] + float(G[u][nmKey].rating)
             if c > dist[nmKey]:
-                dist[nmKey] = float(G[u[1]][nmKey].rating)
+                print("og")
+                dist[nmKey] = float(G[u][nmKey].rating)
                 heapq.heappush(queue, (dist[nmKey], nmKey))
+
+print(len(G))
+print(V['nm0000168'].navn, V['nm0000949'].navn)
 
 
 print(DijkstraShortestPath('nm0000168', 'nm0000949'))
