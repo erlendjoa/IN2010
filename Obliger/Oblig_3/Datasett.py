@@ -1,4 +1,4 @@
-import sys, heapq
+import sys, heapq, queue
 from collections import defaultdict
 
 class Movie:
@@ -58,19 +58,41 @@ print(len(V))
 print(len(E))
 
 for t in E:
-    G[t[0]][t[1]] = M[t[2]].rating  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
+    G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
 
-print(len(G))
+print(V['nm0000168'].navn, V['nm0000949'].navn)
 
-def DijkstraShortestPath(start, end):
+
+def DijkstraShortestPath(startId, endId):
     queue = []
     dist = {}
+    path = []
+
     for v in V:
-        dist[v] = 9999999999999
-    dist[s.nmId] = 0
-    heapq.heappush(queue, s, dist[s.nmId])
+        dist[v] = float('inf')
+        heapq.heappush(queue, (dist[v], v))
+    dist[startId] = 0
+    heapq.heappush(queue, (dist[startId], startId))
 
     while len(queue) > 0:
         u = heapq.heappop(queue)
-        #for (u,v) in E:
-            
+        # u[0] <- weight
+        # u[1] <- nmId
+        if u in path:
+            continue
+        
+        path.append(u[1])
+
+        if u[1] == endId:
+            return path
+
+        for nmKey in G[u[1]]:
+            print(V[u[1]].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u[1]][nmKey].tittel)
+
+            c = ( dist[nmKey] + float(G[u[1]][nmKey].rating)) 
+            if c > dist[nmKey]:
+                dist[nmKey] = float(G[u[1]][nmKey].rating)
+                heapq.heappush(queue, (dist[nmKey], nmKey))
+
+
+print(DijkstraShortestPath('nm0000168', 'nm0000949'))
