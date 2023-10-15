@@ -72,25 +72,34 @@ def DijkstraShortestPath(startId, endId):
     heapq.heappush(queue, (0, startId))
 
     while queue:
+        heapq.heapify(queue)
         w, u = heapq.heappop(queue)
-        print(w, u)
         if u in path:
-            return path
+            continue
         path.append(u)
+        print(V[u].navn)
 
         if u == endId:
             print("OH")
             return path
 
-        print(len(G[u]))
+        tempMin = {}
         for nmKey in G[u]:
-            print(V[u].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u][nmKey].tittel)
 
-            c = dist[nmKey] + float(G[u][nmKey].rating)
-            if c > dist[nmKey]:
-                print("og")
+            #print(V[u].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u][nmKey].tittel)
+
+            if dist[nmKey] == float(999999999):
                 dist[nmKey] = float(G[u][nmKey].rating)
-                heapq.heappush(queue, (dist[nmKey], nmKey))
+                tempMin[dist[nmKey]] = nmKey
+            elif dist[nmKey] not in path:
+                dist[nmKey] += float(G[u][nmKey].rating)
+                tempMin[dist[nmKey]] = nmKey
+                
+        while len(tempMin) > 0:
+            minKey = tempMin.pop(min(tempMin))
+            print(dist[minKey])
+            heapq.heappush(queue, (dist[minKey], minKey))
+
 
 print(len(G))
 print(V['nm0000168'].navn, V['nm0000949'].navn)
