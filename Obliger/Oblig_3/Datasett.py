@@ -1,4 +1,4 @@
-import sys, heapq, queue
+import sys, heapq
 from collections import defaultdict
 
 class Movie:
@@ -45,7 +45,7 @@ with open(sys.argv[1], encoding='utf-8') as f:
         V[newActor.nmId] = newActor
 
 for ttId in M:
-    print(M[ttId].tittel, len(M[ttId].nmIds))
+    #print(M[ttId].tittel, len(M[ttId].nmIds))
     for nmId1 in M[ttId].nmIds:
             for nmId2 in M[ttId].nmIds:
                 if (nmId1 != nmId2):
@@ -53,13 +53,13 @@ for ttId in M:
                     if (nmId1 != nmId2) and (nmId2, nmId1, M[ttId].ttId) not in E:
                         E.add((nmId1, nmId2, M[ttId].ttId))
 
-
-print(len(V))
-print(len(E))
+print("VERTICES: " + str(len(V)))
+print("EDGES: " + str(len(E)))
 
 for t in E:
     G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
     G[t[1]][t[0]] = M[t[2]]
+
 
 def DijkstraShortestPath(startId, endId):
     queue = []
@@ -67,42 +67,33 @@ def DijkstraShortestPath(startId, endId):
     path = []
 
     for v in V:
-        dist[v] = float(999999999)
+        dist[v] = 9999999999999999
     dist[startId] = 0
-    heapq.heappush(queue, (0, startId))
+    heapq.heappush(queue, (0, startId, None))
 
     while queue:
-        heapq.heapify(queue)
-        w, u = heapq.heappop(queue)
+        w, u, m = heapq.heappop(queue)
+
         if u in path:
             continue
+
+        try:
+            print(f"===[ {m.tittel} {m.rating} ] ===> {V[u].navn}")
+        except AttributeError:
+            print()
+
         path.append(u)
-        print(V[u].navn)
-
         if u == endId:
-            print("OH")
-            return path
-
-        tempMin = {}
+            return
+        
         for nmKey in G[u]:
-
-            #print(V[u].navn + " har spilt med " + V[nmKey].navn + " i filmen " + G[u][nmKey].tittel)
-
-            if dist[nmKey] == float(999999999):
-                dist[nmKey] = float(G[u][nmKey].rating)
-                tempMin[dist[nmKey]] = nmKey
-            elif dist[nmKey] not in path:
-                dist[nmKey] += float(G[u][nmKey].rating)
-                tempMin[dist[nmKey]] = nmKey
-                
-        while len(tempMin) > 0:
-            minKey = tempMin.pop(min(tempMin))
-            print(dist[minKey])
-            heapq.heappush(queue, (dist[minKey], minKey))
+            eW = float(G[u][nmKey].rating)
+            cost = w + eW
+            if cost < dist[nmKey]:
+                dist[nmKey] = cost
+                heapq.heappush(queue, (cost, nmKey, G[u][nmKey]))
 
 
-print(len(G))
-print(V['nm0000168'].navn, V['nm0000949'].navn)
-
-
-print(DijkstraShortestPath('nm0000168', 'nm0000949'))
+DijkstraShortestPath('nm0424060', ' nm8076281')
+#print(V['nm0000313'].navn, V['nm0001745'].navn)
+#print(G)
