@@ -1,0 +1,5 @@
+nm01"A"tt01"tt02"tt07
+nm02"B"tt02"tt03
+nm03"C"tt03"tt04"tt06
+nm04"D"tt02"tt05
+nm05"E"tt05"tt06"tt07
