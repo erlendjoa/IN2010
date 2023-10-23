@@ -89,7 +89,6 @@ def bfs_shortest_path_between(s, t):
 
 
 def dijkstra_chillest_path(s, t):
-    parents = {}
     parents = {s : None}
 
     queue = []
@@ -102,85 +101,79 @@ def dijkstra_chillest_path(s, t):
 
     while len(queue) > 0:
         w, u = heapq.heappop(queue)
-
-        if u == t:
-            path = []
-            while u:
-                print("!!!")
-                path.append((u, parents[u]))
-                u = parents[u]
-            for nmIdT in path[::-1]:
-                try:
-                    print(f"===[ {G[nmIdT[0]][nmIdT[1]].tittel} ({G[nmIdT[0]][nmIdT[1]].rating}) ] ===> {V[nmIdT[0]].navn}")
-                except KeyError:
-                    print(V[nmIdT[0]].navn)
-        
-
-        for v, e in hent_chilleste_actors(u):
+        #print(w)   
+        for e, v in hent_chilleste_actors(u):
             c = w + e
             if c < dist[v]:
-                parents[v] = u
                 dist[v] = c
+                parents[v] = u
                 heapq.heappush(queue, (c, v))
 
-                
-def hent_chilleste_actors(u):
-    arr = deque()
-    for v in G[u]:
-        e = float(G[u][v].rating)
-
-        if len(arr) == 0:
-            arr.append((v, e))
-        else:
-            for i in range(len(arr)):
-                if e < arr[i][1]:
-                    arr.insert(i, (v, e))
-                    break
-                if i == len(arr)-1:
-                    arr.append((v, e))
-    return arr
-'''
-def bfs_chillest_paths_from(s):
-    parents = {s : None}
-    queue = deque([s])
-
-    while len(queue) > 0:
-        u = queue.popleft()
-        for v, w in hent_chilleste_actors(u):
-            if v not in parents:
-                parents[v] = u
-                queue.append(v)
-
-    return parents
-
-def bfs_chillest_path_between(s, t):
-    parents = bfs_chillest_paths_from(s)
-    v = t
     path = []
-
-    if t not in parents:
-        #print("OOPSIE")
-        return path
-
-    while v:
-        path.append((v, parents[v]))
-        v = parents[v]
-    
+    weight = 0
+    u = t
+    while u:
+        path.append((u, parents[u]))
+        u = parents[u]
     for nmIdT in path[::-1]:
         try:
+            weight += (10 - float(G[nmIdT[0]][nmIdT[1]].rating))
             print(f"===[ {G[nmIdT[0]][nmIdT[1]].tittel} ({G[nmIdT[0]][nmIdT[1]].rating}) ] ===> {V[nmIdT[0]].navn}")
         except KeyError:
             print(V[nmIdT[0]].navn)
-'''
+    print(f"Total weight: {weight}")
+    return
+
+def hent_chilleste_actors(u):
+    arr = []
+    for nmId in G[u]:
+        arr.append((10 - float(G[u][nmId].rating), nmId))
+    return sorted(arr, key=lambda x: x[0])
+
+
+def sterkt_sammenhengende_komponenter():
+    stack = dfs_top_sort()
+    visited = set()
+    components = set()
+    while len(stack) > 0:
+        u = stack.popleft()
+        if u not in visited:
+            component = set()
+            dfs_visit(visited, deque([u]),  component)
+            components.add(component)
+
+def dfs_top_sort():
+    stack = deque()
+    visited = set()
+    for u in V:
+        if u not in visited:
+            stack.appendleft(u)
+            dfs_visit(visited, stack, set())
+    return stack
+
+def dfs_visit(visited, stack, set):
+    while len(stack) > 0:
+        u = stack.popleft()
+        if u not in visited:
+            visited.add(u)
+            for nmId in G[u]:
+                set.add(nmId)
+                stack.append(nmId)
+
 
 print("VERTICES: " + str(len(V)))
 print("EDGES: " + str(len(E)))
-
+print("")
 bfs_shortest_path_between('nm2255973', 'nm0000460')
 bfs_shortest_path_between('nm0424060', 'nm8076281')
 bfs_shortest_path_between('nm4689420', 'nm0000365')
 bfs_shortest_path_between('nm0000288', 'nm2143282')
 bfs_shortest_path_between('nm0637259', 'nm0931324')
-
-bfs_shortest_path_between('nm0000313', 'nm1107001')
-dijkstra_chillest_path("nm0000313", "nm1107001")
+print("")
+dijkstra_chillest_path('nm2255973', 'nm0000460')
+dijkstra_chillest_path('nm0424060', 'nm8076281')
+dijkstra_chillest_path('nm4689420', 'nm0000365')
+dijkstra_chillest_path('nm0000288', 'nm2143282')
+dijkstra_chillest_path('nm0637259', 'nm0931324')
+print("")
+sterkt_sammenhengende_komponenter()
