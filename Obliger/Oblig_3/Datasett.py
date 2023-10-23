@@ -51,69 +51,136 @@ for ttId in M:
                     if (nmId1 != nmId2) and (nmId2, nmId1, M[ttId].ttId) not in E:
                         E.add((nmId1, nmId2, M[ttId].ttId))
 
-print("VERTICES: " + str(len(V)))
-print("EDGES: " + str(len(E)))
-
 for t in E:
     G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
     G[t[1]][t[0]] = M[t[2]]
 
 
-def BFSShortestPath(startId, endId):
-    queue = deque()
-    queue.insert(0,startId)
-
-    visited = []
-    visited.append(startId)
-
-    parents = {node: None for node in V} #G?
+def bfs_shortest_paths_from(s):
+    parents = {s : None}
+    queue = deque([s])
 
     while len(queue) > 0:
         u = queue.popleft()
+        for v in G[u]:
+            if v not in parents:
+                parents[v] = u
+                queue.append(v)
 
-        if u == endId:
-            path = []
-            while u is not None:
-                try:
-                    path.append(f"===[ {G[parents[u]][u].tittel} ({G[parents[u]][u].rating}) ] ===> {V[u].navn}")
-                except KeyError:
-                    path.append(V[u].navn)
-                    path = path[::-1]
-                    for s in path:
-                        print(s)
-                    return
-                u = parents[u]
+    return parents
 
-        for nmKey in G[u]:
-            if nmKey not in visited:
-                visited.append(nmKey)
-                queue.insert(0,nmKey)
-                parents[nmKey] = u
+def bfs_shortest_path_between(s, t):
+    parents = bfs_shortest_paths_from(s)
+    v = t
+    path = []
 
-def DijkstraShortestPath(startId, endId):
+    if t not in parents:
+        return path
+
+    while v:
+        path.append((v, parents[v]))
+        v = parents[v]
+    
+    for nmIdT in path[::-1]:
+        try:
+            print(f"===[ {G[nmIdT[0]][nmIdT[1]].tittel} ({G[nmIdT[0]][nmIdT[1]].rating}) ] ===> {V[nmIdT[0]].navn}")
+        except KeyError:
+            print(V[nmIdT[0]].navn)
+
+
+def dijkstra_chillest_path(s, t):
+    parents = {}
+    parents = {s : None}
+
     queue = []
     dist = {}
-
     for v in V:
-        dist[v] = 9999999999999999
-    dist[startId] = 0
-    heapq.heappush(queue, (0, startId, None))
+        dist[v] = float('inf')
+        #heapq.heappush(queue, (dist[v], v))
+    dist[s] = 0
+    heapq.heappush(queue, (dist[s], s))
 
-    while queue:
-        w, u, m = heapq.heappop(queue)
+    while len(queue) > 0:
+        w, u = heapq.heappop(queue)
+
+        if u == t:
+            path = []
+            while u:
+                print("!!!")
+                path.append((u, parents[u]))
+                u = parents[u]
+            for nmIdT in path[::-1]:
+                try:
+                    print(f"===[ {G[nmIdT[0]][nmIdT[1]].tittel} ({G[nmIdT[0]][nmIdT[1]].rating}) ] ===> {V[nmIdT[0]].navn}")
+                except KeyError:
+                    print(V[nmIdT[0]].navn)
         
-        for nmKey in G[u]:
-            edgeW = float(G[u][nmKey].rating)
-            cost = w + edgeW
-            if cost < dist[nmKey]:
-                dist[nmKey] = cost
-                heapq.heappush(queue, (cost, nmKey, G[u][nmKey]))
+
+        for v, e in hent_chilleste_actors(u):
+            c = w + e
+            if c < dist[v]:
+                parents[v] = u
+                dist[v] = c
+                heapq.heappush(queue, (c, v))
+
+                
+def hent_chilleste_actors(u):
+    arr = deque()
+    for v in G[u]:
+        e = float(G[u][v].rating)
+
+        if len(arr) == 0:
+            arr.append((v, e))
+        else:
+            for i in range(len(arr)):
+                if e < arr[i][1]:
+                    arr.insert(i, (v, e))
+                    break
+                if i == len(arr)-1:
+                    arr.append((v, e))
+    return arr
+'''
+def bfs_chillest_paths_from(s):
+    parents = {s : None}
+    queue = deque([s])
+
+    while len(queue) > 0:
+        u = queue.popleft()
+        for v, w in hent_chilleste_actors(u):
+            if v not in parents:
+                parents[v] = u
+                queue.append(v)
+
+    return parents
+
+def bfs_chillest_path_between(s, t):
+    parents = bfs_chillest_paths_from(s)
+    v = t
+    path = []
+
+    if t not in parents:
+        #print("OOPSIE")
+        return path
+
+    while v:
+        path.append((v, parents[v]))
+        v = parents[v]
     
-    return dist[endId]
+    for nmIdT in path[::-1]:
+        try:
+            print(f"===[ {G[nmIdT[0]][nmIdT[1]].tittel} ({G[nmIdT[0]][nmIdT[1]].rating}) ] ===> {V[nmIdT[0]].navn}")
+        except KeyError:
+            print(V[nmIdT[0]].navn)
+'''
 
+print("VERTICES: " + str(len(V)))
+print("EDGES: " + str(len(E)))
 
-BFSShortestPath('nm2255973', 'nm0000460')
-BFSShortestPath('nm0424060', 'nm8076281')
-BFSShortestPath('nm4689420', 'nm0000365')
-BFSShortestPath('nm0000288', 'nm2143282')
-BFSShortestPath('nm0637259', 'nm0931324')
+bfs_shortest_path_between('nm2255973', 'nm0000460')
+bfs_shortest_path_between('nm0424060', 'nm8076281')
+bfs_shortest_path_between('nm4689420', 'nm0000365')
+bfs_shortest_path_between('nm0000288', 'nm2143282')
+bfs_shortest_path_between('nm0637259', 'nm0931324')
+
+bfs_shortest_path_between('nm0000313', 'nm1107001')
+dijkstra_chillest_path("nm0000313", "nm1107001")
