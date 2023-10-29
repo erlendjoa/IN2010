@@ -1,7 +1,0 @@
-tt01"Movie1"5"1
-tt02"Movie2"10"1
-tt03"Movie3"8"1
-tt04"Movie4"3"1
-tt05"Movie5"10"1
-tt06"Movie6"1"1
-tt07"Movie7"25"1
