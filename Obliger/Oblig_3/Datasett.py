@@ -24,13 +24,13 @@ G = defaultdict(dict)
 
 with open(sys.argv[2], encoding='utf-8') as f:
     for line in f:
-        print("CREATING MOVIE")
+        #print("CREATING MOVIE")
         content = line.strip().split("\t")
         M[content[0]] = Movie(content[0], content[1], content[2])
 
 with open(sys.argv[1], encoding='utf-8') as f:
     for line in f:
-        print("CREATING ACTOR")
+        #print("CREATING ACTOR")
         content = line.strip().split("\t")
         newActor = Actor(content.pop(0), content.pop(0)) #nmId, navn
         movielist = []
@@ -52,7 +52,7 @@ for ttId in M:
                         E.add((nmId1, nmId2, M[ttId].ttId))
 
 for t in E:
-    G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
+    G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:Movie(), nmId:Movie()}, nmId: {nmId:Movie(), nmId:Movie()}, ...}
     G[t[1]][t[0]] = M[t[2]]
 
 
