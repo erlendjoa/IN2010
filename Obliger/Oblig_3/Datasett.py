@@ -52,7 +52,7 @@ for ttId in M:
                         E.add((nmId1, nmId2, M[ttId].ttId))
 
 for t in E:
-    G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:w}, {nmId:w}, nmId: {nmId:w}, {nmId:w}, ...}
+    G[t[0]][t[1]] = M[t[2]]  # {nmId: {nmId:Movie(), nmId:Movie()}, nmId: {nmId:Movie(), nmId:Movie()}, ...}
     G[t[1]][t[0]] = M[t[2]]
 
 
