@@ -12,7 +12,7 @@ class HashSet:
         hashed = self.hash(n)
         if self.arr[hashed] == n:
             return
-        elif (self.arr[hashed] == ""):
+        elif self.arr[hashed] == "":
             self.arr[hashed] = n
         else:
             if not isinstance(self.arr[hashed], list):
@@ -45,7 +45,6 @@ class HashSet:
                 if key == n:
                     return True
         return self.arr[hashed] == n
-        print(self.arr)
     
     def size(self):
         return self.sizeOf
@@ -65,12 +64,12 @@ def hashSet(s):
     else:
         print(set.size())
 
-stdinCount = int(input())
+
 set = HashSet()
-for i in range(stdinCount):
+for i in range(int(input())):
     hashSet(input())
 
-    
+
 """
 b)
     Tidsbruken på denne implementasjonen basert på 
