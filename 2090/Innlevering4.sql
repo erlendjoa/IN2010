@@ -30,22 +30,14 @@ ON f.filmid = newTable.filmid;
 
 SELECT fc.country, count(fc.country) AS antallfilmer, avg(fr.rank) as averagerank
 FROM film AS f
-LEFT JOIN filmrating AS fr ON f.filmid = fr.filmid
-INNER JOIN filmcountry AS fc ON f.filmid = fc.filmid
+JOIN filmrating AS fr ON f.filmid = fr.filmid
+JOIN filmcountry AS fc ON f.filmid = fc.filmid
 GROUP BY fc.country;
 
-    -- virker ikke:
-    SELECT DISTINCT fc.country, 
-    count(fc.country), 
-    avg(fr.rank),
-    nt.genre
+
+    SELECT fc.country, count(fc.country) AS antallfilmer, avg(fr.rank) as averagerank, fg.genre
     FROM film AS f
-    LEFT JOIN filmrating AS fr ON f.filmid = fr.filmid
-    INNER JOIN filmcountry AS fc ON f.filmid = fc.filmid
-    INNER JOIN (
-        SELECT filmc.country, count(fg.genre)
-        FROM filmgenre AS fg
-        INNER JOIN filmcountry AS filmc ON fg.filmid = filmc.filmid
-        GROUP BY fg.filmid
-    ) AS nt ON fc.country = nt.country
-    GROUP BY fc.country, nt.genrecount;
+    JOIN filmrating AS fr ON f.filmid = fr.filmid
+    JOIN filmcountry AS fc ON f.filmid = fc.filmid
+    JOIN filmgenre AS fg ON f.filmid = fg.filmid
+    GROUP BY fc.country, fg.genre;
