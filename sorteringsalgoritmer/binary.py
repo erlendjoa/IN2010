@@ -14,5 +14,3 @@ def binarySearch(key):
         else:
             min = len(list)//2
 print(binarySearch(30))
-
-  
